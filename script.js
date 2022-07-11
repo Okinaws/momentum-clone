@@ -2,6 +2,10 @@ const time = document.querySelector(".time");
 const date = document.querySelector(".date");
 const greeting = document.querySelector(".greeting");
 const name = document.querySelector(".name");
+const body = document.querySelector("body");
+const slideNext = document.querySelector(".slide-next")
+const slidePrev = document.querySelector(".slide-prev")
+let imgNum = getRandomImgNum();
 
 
 function showTime() {
@@ -20,7 +24,7 @@ function showDate() {
     date.textContent = `${days[currentDate.getDay()]}, ${currentDate.toLocaleDateString('en-US', options)}`;
 }
 
-function showGreeting() {
+function getTimeOfDay () {
     let hour = new Date().getHours();
     let timeOfDay = "Night";
     if (hour > 5 && hour <= 12) {
@@ -32,10 +36,10 @@ function showGreeting() {
     else if (hour > 18 && hour <= 23) {
         timeOfDay = "Evening";
     }
-    greeting.textContent = `Good ${timeOfDay}, `;
+    return timeOfDay;
 }
 
-showGreeting();
+greeting.textContent = `Good ${getTimeOfDay()}, `;
 
 function setLocalStorage() {
     localStorage.setItem('name', name.value);
@@ -49,3 +53,40 @@ function getLocalStorage() {
 
 window.addEventListener('load', getLocalStorage)
 window.addEventListener('beforeunload', setLocalStorage)
+
+function setBg() {
+    const img = new Image();
+    img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${getTimeOfDay().toLocaleLowerCase()}/${imgNum.toString().padStart(2, "0")}.jpg`;
+    img.onload = () => {      
+        body.style.backgroundImage = `url(${img.src})`;
+    };
+}
+
+function getRandomImgNum () {
+    return Math.floor(Math.random() * 21);
+}
+
+function getSlideNext() {
+    if (imgNum == 20) {
+        imgNum = 1;
+    }
+    else {
+        imgNum = (Number(imgNum) + 1).toString()
+    }
+    setBg();
+}
+
+function getSlidePrev() {
+    if (imgNum == 1) {
+        imgNum = 20;
+    }
+    else {
+        imgNum = (Number(imgNum) - 1).toString()
+    }
+    setBg();
+}
+
+setBg();
+
+slideNext.addEventListener('click', getSlideNext);
+slidePrev.addEventListener('click', getSlidePrev);
