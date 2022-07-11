@@ -6,6 +6,7 @@ function showTime() {
     const currentTime = new Date().toLocaleTimeString();
     time.textContent = currentTime;
     setTimeout(showTime, 1000);
+    showDate();
 }
 
 showTime();
@@ -16,5 +17,3 @@ function showDate() {
     const options = {month: 'long', day: 'numeric'};
     date.textContent = `${days[currentDate.getDay()]}, ${currentDate.toLocaleDateString('en-US', options)}`;
 }
-
-showDate();
