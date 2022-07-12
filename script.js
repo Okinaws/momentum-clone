@@ -6,6 +6,13 @@ const body = document.querySelector("body");
 const slideNext = document.querySelector(".slide-next")
 const slidePrev = document.querySelector(".slide-prev")
 let imgNum = getRandomImgNum();
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const wind = document.querySelector('.wind');
+const feelsLike = document.querySelector('.feels-like');
+const weatherDescription = document.querySelector('.weather-description');
+const city = document.querySelector('.city');
+const weatherError = document.querySelector('.weather-error');
 
 
 function showTime() {
@@ -90,3 +97,32 @@ setBg();
 
 slideNext.addEventListener('click', getSlideNext);
 slidePrev.addEventListener('click', getSlidePrev);
+
+async function getWeather() {
+    try {  
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.textContent}&lang=en&appid=0bbb38bd937af6c3b86e81cc2b0cfe7d&units=metric`;
+        const res = await fetch(url);
+        const data = await res.json();
+        weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+        temperature.textContent = `${Math.floor(data.main.temp)}°C`;
+        weatherDescription.textContent = data.weather[0].description;
+        feelsLike.textContent = `Feels like: ${Math.floor(data.main.feels_like)}°C`
+        wind.textContent = `Wind: ${Math.floor(data.wind.speed)} m/s`
+        city.style.textDecoration='';
+    } catch (error) {
+        city.style.textDecoration='underline wavy red';
+    }
+}
+getWeather()
+
+function setCity(event) {
+    if (event.code === 'Enter') {
+        getWeather();
+        city.blur();
+    }
+}
+
+city.addEventListener('keypress', setCity);
+city.onblur = function() {
+    getWeather();
+}
