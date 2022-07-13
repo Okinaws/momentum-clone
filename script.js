@@ -13,6 +13,9 @@ const feelsLike = document.querySelector('.feels-like');
 const weatherDescription = document.querySelector('.weather-description');
 const city = document.querySelector('.city');
 const weatherError = document.querySelector('.weather-error');
+const quote = document.querySelector('.quote');
+const author = document.querySelector('.author');
+const changeQuote = document.querySelector('.change-quote');
 
 
 function showTime() {
@@ -126,3 +129,16 @@ city.addEventListener('keypress', setCity);
 city.onblur = function() {
     getWeather();
 }
+
+async function setQuote() {  
+    const quotes = 'json/quotes.json';
+    const res = await fetch(quotes);
+    const data = await res.json();
+    quoteNumber = Math.floor(Math.random() * Object.keys(data).length);
+    quote.textContent = `"${data[quoteNumber].text_en}"`;
+    author.textContent = data[quoteNumber].author;
+}
+
+setQuote();
+
+changeQuote.addEventListener('click', setQuote);
