@@ -16,8 +16,7 @@ const weatherError = document.querySelector('.weather-error');
 const quote = document.querySelector('.quote');
 const author = document.querySelector('.author');
 const changeQuote = document.querySelector('.change-quote');
-
-
+const horoscope = document.querySelector('.horoscope');
 
 function showTime() {
     const currentTime = new Date().toLocaleTimeString();
@@ -157,3 +156,28 @@ async function setQuote() {
 setQuote();
 
 changeQuote.addEventListener('click', setQuote);
+
+function isCheck(name) {
+    return document.querySelector('input[name="' + name + '"]:checked');
+}
+
+async function setHoroscope(sign) {  
+    const URL = `https://aztro.sameerkumar.website/?sign=${sign}&day=today`;
+    fetch(URL, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(json => {
+        horoscope.textContent = json.description;
+    });
+}
+
+document.querySelector('input[value="' + localStorage.getItem("Radio") + '"]').checked = true;
+setHoroscope(isCheck("sign").value);
+
+Array.from(document.getElementsByClassName("sign")).forEach(element => 
+    element.addEventListener('click', e => {
+        setHoroscope(e.target.value);
+        localStorage.setItem('Radio', e.target.value);
+    })
+);

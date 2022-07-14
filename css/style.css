@@ -162,10 +162,9 @@ body {
     font-size: 44px;
 }
   
-.city {
-    width: 170px;
-    height: 34px;
-    padding: 5px;
+.city, .signs {
+    width: 180px;
+    height: auto;
     font-size: 20px;
     line-height: 24px;
     color: #fff;  
@@ -203,6 +202,28 @@ body {
   
 .author {
     min-height: 20px;
+}
+
+[id^=radio-] {
+    display: none;
+}
+
+.signs label img:hover{
+    cursor: pointer;
+    background-color: #b3d7ff;
+    transform: scale(1.1);
+}
+
+[id^=radio-]:checked + label img {
+    background-color: #9bbfe9;
+  }
+
+
+.signs label img {
+    max-width: 25px;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 30%;
 }
 
 @media (max-width: 768px) {
