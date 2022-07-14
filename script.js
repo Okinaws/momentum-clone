@@ -3,9 +3,9 @@ const date = document.querySelector(".date");
 const greeting = document.querySelector(".greeting");
 const name = document.querySelector(".name");
 const body = document.querySelector("body");
-const slideNext = document.querySelector(".slide-next")
-const slidePrev = document.querySelector(".slide-prev")
 let imgNum = getRandomImgNum();
+const slideNext = document.querySelector(".slide-next");
+const slidePrev = document.querySelector(".slide-prev");
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
 const wind = document.querySelector('.wind');
@@ -16,6 +16,7 @@ const weatherError = document.querySelector('.weather-error');
 const quote = document.querySelector('.quote');
 const author = document.querySelector('.author');
 const changeQuote = document.querySelector('.change-quote');
+
 
 
 function showTime() {
@@ -64,12 +65,26 @@ function getLocalStorage() {
 window.addEventListener('load', getLocalStorage)
 window.addEventListener('beforeunload', setLocalStorage)
 
-function setBg() {
+async function setBg() {
     const img = new Image();
-    img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${getTimeOfDay().toLocaleLowerCase()}/${imgNum.toString().padStart(2, "0")}.jpg`;
-    img.onload = () => {      
-        body.style.backgroundImage = `url(${img.src})`;
-    };
+    try {
+        const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${getTimeOfDay().toLocaleLowerCase()}&client_id=IYY267nuZ1bQVmUpsqye4npwOUvi_bw-zMs94TQVhOQ`;
+        const res = await fetch(url);
+        const data = await res.json();
+        img.src = data.urls.regular;
+
+        slideNext.addEventListener('click', setBg);
+        slidePrev.addEventListener('click', setBg);
+    } catch (error) {
+        img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${getTimeOfDay().toLocaleLowerCase()}/${imgNum.toString().padStart(2, "0")}.jpg`;
+        slideNext.addEventListener('click', getSlideNext);
+        slidePrev.addEventListener('click', getSlidePrev);
+    }
+    finally {
+        img.onload = () => {      
+            body.style.backgroundImage = `url(${img.src})`;
+        };
+    }
 }
 
 function getRandomImgNum () {
@@ -98,8 +113,8 @@ function getSlidePrev() {
 
 setBg();
 
-slideNext.addEventListener('click', getSlideNext);
-slidePrev.addEventListener('click', getSlidePrev);
+slideNext.addEventListener('click', setBg);
+slidePrev.addEventListener('click', setBg);
 
 async function getWeather() {
     try {  
