@@ -145,11 +145,11 @@ city.onblur = function() {
 }
 
 async function setQuote() {  
-    const quotes = 'json/quotes.json';
+    const quotes = 'https://type.fit/api/quotes';
     const res = await fetch(quotes);
     const data = await res.json();
     quoteNumber = Math.floor(Math.random() * Object.keys(data).length);
-    quote.textContent = `"${data[quoteNumber].text_en}"`;
+    quote.textContent = `"${data[quoteNumber].text}"`;
     author.textContent = data[quoteNumber].author;
 }
 
