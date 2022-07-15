@@ -53,12 +53,21 @@ greeting.textContent = `Good ${getTimeOfDay()}, `;
 
 function setLocalStorage() {
     localStorage.setItem('name', name.value);
+    localStorage.setItem('city', city.textContent);
 }
 
 function getLocalStorage() {
     if(localStorage.getItem('name')) {
       name.value = localStorage.getItem('name');
     }
+    if(localStorage.getItem('city')) {
+        city.textContent = localStorage.getItem('city');
+    }
+    if(localStorage.getItem('Radio')) {
+        document.querySelector('input[value="' + localStorage.getItem("Radio") + '"]').checked = true;
+    }
+    setHoroscope(isCheck("sign").value);
+    getWeather()
 }
 
 window.addEventListener('load', getLocalStorage)
@@ -130,7 +139,6 @@ async function getWeather() {
         city.style.textDecoration='underline wavy red';
     }
 }
-getWeather()
 
 function setCity(event) {
     if (event.code === 'Enter') {
@@ -171,11 +179,6 @@ async function setHoroscope(sign) {
         horoscope.textContent = json.description;
     });
 }
-
-if(localStorage.getItem('Radio')) {
-    document.querySelector('input[value="' + localStorage.getItem("Radio") + '"]').checked = true;
-}
-setHoroscope(isCheck("sign").value);
 
 Array.from(document.getElementsByClassName("sign")).forEach(element => 
     element.addEventListener('click', e => {
