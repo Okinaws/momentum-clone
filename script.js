@@ -59,9 +59,6 @@ function getLocalStorage() {
     if(localStorage.getItem('name')) {
       name.value = localStorage.getItem('name');
     }
-    if(localStorage.getItem('Radio')) {
-        document.querySelector('input[value="' + localStorage.getItem("Radio") + '"]').checked = true;
-      }
 }
 
 window.addEventListener('load', getLocalStorage)
@@ -175,6 +172,9 @@ async function setHoroscope(sign) {
     });
 }
 
+if(localStorage.getItem('Radio')) {
+    document.querySelector('input[value="' + localStorage.getItem("Radio") + '"]').checked = true;
+}
 setHoroscope(isCheck("sign").value);
 
 Array.from(document.getElementsByClassName("sign")).forEach(element => 
