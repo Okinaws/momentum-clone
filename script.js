@@ -16,7 +16,7 @@ const weatherError = document.querySelector('.weather-error');
 const quote = document.querySelector('.quote');
 const author = document.querySelector('.author');
 const changeQuote = document.querySelector('.change-quote');
-const horoscope = document.querySelector('.horoscope');
+const horoscope = document.querySelector('.horoscope-description');
 
 function showTime() {
     const currentTime = new Date().toLocaleTimeString();

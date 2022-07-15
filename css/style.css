@@ -135,7 +135,7 @@ body {
     background-image: url("../assets/svg/slider-next.svg");
 }
 
-.weather {
+.weather, .horoscope {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
