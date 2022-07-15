@@ -193,8 +193,27 @@ body {
   
 .change-quote {
     margin-bottom: 30px;
-    background-image: url("../assets/svg/reload.svg");  
+    background-image: url("../assets/svg/reload.svg");
 }
+
+.change-quote:focus {
+    -webkit-animation: pressed 0.5s ease-in-out backwards;
+            animation: pressed 0.5s ease-in-out backwards;
+}
+
+.change-quote:active {
+    -webkit-animation: none;
+            animation: none;
+}
+
+@keyframes pressed {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
   
 .quote {
     min-height: 32px;
